@@ -1,4 +1,3 @@
-# "For a more advanced configuration example utilizing the advanced features of GroupManager, se http://pastebin.com/MeCpqVZv"
 groups:
   Default:
     default: true
@@ -17,6 +16,8 @@ groups:
   SemiAdmin:
     default: false
     permissions:
+    - -groupmanager.mantogglesave
+    - essentials
     - essentials.clearinventory
     - essentials.cooldown.bypass
     - essentials.deljail
@@ -27,14 +28,15 @@ groups:
     - essentials.invsee
     - essentials.item
     - essentials.jails
+    - essentials.kickall
     - essentials.kit.*
     - essentials.mute
-    - essentials.reloadall
     - essentials.setjail
     - essentials.signs.disposal.create
     - essentials.spawmob
     - essentials.togglejail
     - groupmanager.*
+    - essentials.ext
     inheritance:
     - moderator
     info:
@@ -59,9 +61,9 @@ groups:
     - essentials.pay
     - essentials.portal
     - essentials.protect
-    - essentials.sell
     - essentials.sethome
     - essentials.signs.buy.use
+    - essentials.signs.disposal.create
     - essentials.signs.disposal.use
     - essentials.signs.free.use
     - essentials.signs.heal.use
@@ -74,11 +76,11 @@ groups:
     - essentials.signs.trade.use
     - essentials.tpa
     - essentials.tpaccept
-    - essentials.tpahere
     - essentials.tpdeny
     - essentials.warp
     - essentials.warp.list
     - essentials.worth
+    - essentials.suicide
     inheritance:
     - default
     info:
@@ -105,9 +107,6 @@ groups:
     - essentials.togglejail
     - essentials.top
     - essentials.tp
-    - essentials.tpa
-    - essentials.tpaaccept
-    - essentials.tpahere
     - essentials.tpdeny
     - essentials.tphere
     - essentials.tpo
