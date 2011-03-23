@@ -1,11 +1,17 @@
 package com.earth2me.essentials;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import net.minecraft.server.InventoryPlayer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
+import org.bukkit.craftbukkit.block.CraftSign;
+import org.bukkit.craftbukkit.inventory.CraftInventoryPlayer;
 import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
+import org.bukkit.inventory.ItemStack;
 
 
 public class EssentialsPlayerListener extends PlayerListener
@@ -13,11 +19,14 @@ public class EssentialsPlayerListener extends PlayerListener
 	private static final Logger logger = Logger.getLogger("Minecraft");
 	private final Server server;
 	private final Essentials parent;
+	private EssentialsBlockListener essBlockListener = null;
+
 
 	public EssentialsPlayerListener(Essentials parent)
 	{
 		this.parent = parent;
 		this.server = parent.getServer();
+		essBlockListener = new EssentialsBlockListener(parent);
 	}
 
 	@Override
@@ -99,9 +108,12 @@ public class EssentialsPlayerListener extends PlayerListener
 
 			event.setFrom(loc);
 			event.setTo(loc);
-			try {
+			try
+			{
 				user.teleportToNow(loc);
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				user.sendMessage(ex.getMessage());
 			}
 			user.setJustPortaled(true);
@@ -186,7 +198,7 @@ public class EssentialsPlayerListener extends PlayerListener
 		User user = User.get(event.getPlayer());
 		if (event.getResult() != Result.ALLOWED)
 			return;
-		
+
 		if (user.isBanned())
 		{
 			event.disallow(Result.KICK_BANNED, "The Ban Hammer has spoken!");
@@ -222,5 +234,87 @@ public class EssentialsPlayerListener extends PlayerListener
 			return;
 		event.setCancelled(true);
 		user.sendMessage(ChatColor.RED + "You do the crime, you do the time.");
+	}
+
+	@Override
+	public void onPlayerInteract(PlayerInteractEvent event)
+	{
+
+		if (event.isCancelled()) return;
+		User user = User.get(event.getPlayer());
+		if (user.isJailed()) return;
+		if (!Essentials.getSettings().areSignsDisabled() && EssentialsBlockListener.protectedBlocks.contains(event.getClickedBlock().getType()))
+		{
+			if (!user.isAuthorized("essentials.signs.protection.override"))
+			{
+				if (essBlockListener.isBlockProtected(event.getClickedBlock(), user))
+				{
+					event.setCancelled(true);
+					user.sendMessage("§cYou do not have permission to access that chest.");
+					return;
+				}
+			}
+		}
+
+		if (Essentials.getSettings().getBedSetsHome() && event.getClickedBlock().getType() == Material.BED_BLOCK)
+		{
+			try
+			{
+				user.setHome();
+				user.sendMessage("§7Your home is now set to this bed.");
+			}
+			catch (Throwable ex)
+			{
+			}
+		}
+
+
+		if (Essentials.getSettings().areSignsDisabled()) return;
+		if (event.getClickedBlock().getType() != Material.WALL_SIGN && event.getClickedBlock().getType() != Material.SIGN_POST)
+			return;
+		Sign sign = new CraftSign(event.getClickedBlock());
+
+		try
+		{
+			if (sign.getLine(0).equals("§1[Free]") && user.isAuthorized("essentials.signs.free.use"))
+			{
+				ItemStack item = ItemDb.get(sign.getLine(1));
+				CraftInventoryPlayer inv = new CraftInventoryPlayer(new InventoryPlayer(user.getHandle()));
+				inv.clear();
+				item.setAmount(9 * 4 * 64);
+				inv.addItem(item);
+				user.showInventory(inv);
+				return;
+			}
+			if (sign.getLine(0).equals("§1[Disposal]") && user.isAuthorized("essentials.signs.disposal.use"))
+			{
+				CraftInventoryPlayer inv = new CraftInventoryPlayer(new InventoryPlayer(user.getHandle()));
+				inv.clear();
+				user.showInventory(inv);
+				return;
+			}
+			if (sign.getLine(0).equals("§1[Heal]") && user.isAuthorized("essentials.signs.heal.use"))
+			{
+				user.setHealth(20);
+				user.sendMessage("§7You have been healed.");
+				return;
+			}
+			if (sign.getLine(0).equals("§1[Mail]") && user.isAuthorized("essentials.signs.mail.use") && user.isAuthorized("essentials.mail"))
+			{
+				List<String> mail = Essentials.readMail(user);
+				if (mail.isEmpty())
+				{
+					user.sendMessage("§cYou do not have any mail!");
+					return;
+				}
+				for (String s : mail) user.sendMessage(s);
+				user.sendMessage("§cTo mark your mail as read, type §c/mail clear");
+				return;
+			}
+		}
+		catch (Throwable ex)
+		{
+			user.sendMessage("§cError: " + ex.getMessage());
+		}
 	}
 }

@@ -13,6 +13,7 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockInteractEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerListener;
 
 public class Jail extends BlockListener implements IConf {
 	private static final Logger logger = Logger.getLogger("Minecraft");
@@ -85,18 +86,6 @@ public class Jail extends BlockListener implements IConf {
 	}
 
 	@Override
-	public void onBlockInteract(BlockInteractEvent event)
-	{
-		if (!event.isPlayer()) {
-			return;
-		}
-		User user = User.get((Player)event.getEntity());
-		if (user.isJailed()) {
-			event.setCancelled(true);
-		}
-	}
-
-	@Override
 	public void onBlockPlace(BlockPlaceEvent event)
 	{
 		User user = User.get(event.getPlayer());
@@ -113,3 +102,5 @@ public class Jail extends BlockListener implements IConf {
 		}
 	}
 }
+	
+
