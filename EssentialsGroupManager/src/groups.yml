@@ -8,7 +8,6 @@ groups:
     - essentials.motd
     - essentials.rules
     - essentials.spawn
-    - lwc.blockinventory
     inheritance: []
     info:
       prefix: '&e'
@@ -18,7 +17,6 @@ groups:
     default: false
     permissions:
     - -groupmanager.mantogglesave
-    - bb.admin.info
     - essentials
     - essentials.clearinventory
     - essentials.cooldown.bypass
@@ -42,8 +40,6 @@ groups:
     - essentials.teleport.timer.bypass
     - essentials.togglejail
     - groupmanager.*
-    - lwc.mod
-    - worldedit.*
     - essentials.burn
     inheritance:
     - moderator
@@ -91,9 +87,6 @@ groups:
     - essentials.warp
     - essentials.warp.list
     - essentials.worth
-    - herp.derp
-    - lwc.protect
-    - magiccarpet.*
     inheritance:
     - default
     info:
@@ -103,7 +96,6 @@ groups:
   Moderator:
     default: false
     permissions:
-    - bb.admin.watch
     - essentials.back
     - essentials.ban
     - essentials.banip
