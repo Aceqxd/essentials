@@ -21,7 +21,6 @@ groups:
     - essentials.clearinventory
     - essentials.cooldown.bypass
     - essentials.deljail
-    - essentials.ext
     - essentials.give
     - essentials.god
     - essentials.heal
