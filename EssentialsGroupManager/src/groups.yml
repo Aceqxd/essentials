@@ -8,6 +8,7 @@ groups:
     - essentials.motd
     - essentials.rules
     - essentials.spawn
+    - lwc.blockinventory
     inheritance: []
     info:
       prefix: '&e'
@@ -17,10 +18,12 @@ groups:
     default: false
     permissions:
     - -groupmanager.mantogglesave
+    - bb.admin.info
     - essentials
     - essentials.clearinventory
     - essentials.cooldown.bypass
     - essentials.deljail
+    - essentials.ext
     - essentials.give
     - essentials.god
     - essentials.heal
@@ -31,25 +34,31 @@ groups:
     - essentials.kickall
     - essentials.kit.*
     - essentials.mute
+    - essentials.sell
     - essentials.setjail
-    - essentials.signs.disposal.create
+    - essentials.signs.protection.override
     - essentials.spawmob
+    - essentials.teleport.cooldown.bypass
+    - essentials.teleport.timer.bypass
     - essentials.togglejail
     - groupmanager.*
-    - essentials.ext
+    - lwc.mod
+    - worldedit.*
+    - essentials.burn
     inheritance:
     - moderator
     info:
-      prefix: '&1'
+      prefix: '&c'
       build: true
       suffix: ''
   Builder:
     default: false
     permissions:
     - essentials.afk
-    - essentials.back.death
+    - essentials.back.ondeath
     - essentials.balance
     - essentials.chat.shout
+    - essentials.compass
     - essentials.home
     - essentials.kit
     - essentials.kit.tools
@@ -74,27 +83,31 @@ groups:
     - essentials.signs.sell.use
     - essentials.signs.trade.create
     - essentials.signs.trade.use
+    - essentials.suicide
     - essentials.tpa
     - essentials.tpaccept
+    - essentials.tpahere
     - essentials.tpdeny
     - essentials.warp
     - essentials.warp.list
     - essentials.worth
-    - essentials.suicide
+    - herp.derp
+    - lwc.protect
+    - magiccarpet.*
     inheritance:
     - default
     info:
-      prefix: '&5'
+      prefix: '&2'
       build: true
       suffix: ''
   Moderator:
     default: false
     permissions:
+    - bb.admin.watch
     - essentials.back
     - essentials.ban
     - essentials.banip
     - essentials.broadcast
-    - essentials.compass
     - essentials.delwarp
     - essentials.depth
     - essentials.eco
@@ -107,7 +120,6 @@ groups:
     - essentials.togglejail
     - essentials.top
     - essentials.tp
-    - essentials.tpdeny
     - essentials.tphere
     - essentials.tpo
     - essentials.tpohere
@@ -125,10 +137,11 @@ groups:
     - groupmanager.manselect
     - groupmanager.manuadd
     - groupmanager.manudel
+    - essentials.ext
     inheritance:
     - builder
     info:
-      prefix: '&9'
+      prefix: '&5'
       build: true
       suffix: ''
   Admin:
