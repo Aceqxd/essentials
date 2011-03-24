@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.craftbukkit.block.CraftSign;
 import org.bukkit.craftbukkit.inventory.CraftInventoryPlayer;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.inventory.ItemStack;
@@ -241,6 +242,7 @@ public class EssentialsPlayerListener extends PlayerListener
 	{
 
 		if (event.isCancelled()) return;
+		if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 		User user = User.get(event.getPlayer());
 		if (user.isJailed()) return;
 		if (!Essentials.getSettings().areSignsDisabled() && EssentialsBlockListener.protectedBlocks.contains(event.getClickedBlock().getType()))

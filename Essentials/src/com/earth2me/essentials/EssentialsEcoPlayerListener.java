@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.craftbukkit.block.CraftSign;
 import org.bukkit.craftbukkit.inventory.CraftInventory;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.inventory.ItemStack;
@@ -17,6 +18,7 @@ public class EssentialsEcoPlayerListener extends PlayerListener
 	{
 
 		if (Essentials.getSettings().areSignsDisabled()) return;
+		if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 		User user = User.get(event.getPlayer());
 		if (event.getClickedBlock().getType() != Material.WALL_SIGN && event.getClickedBlock().getType() != Material.SIGN_POST)
 			return;
