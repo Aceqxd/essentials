@@ -269,7 +269,7 @@ protect:
   mysqlDb: 'jdbc:mysql://localhost:3306/minecraft'
 
   # For which block types would you like to be alerted?
-  # You can find a list of IDs in plugins/Essentials/Items.db after loading Essentials for the first time.
+  # You can find a list of IDs in plugins/Essentials/items.csv after loading Essentials for the first time.
   alert:
     # 10: lava
     # 11: still lava
