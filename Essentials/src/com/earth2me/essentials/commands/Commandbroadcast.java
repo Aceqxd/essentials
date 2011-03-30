@@ -3,7 +3,6 @@ package com.earth2me.essentials.commands;
 import org.bukkit.Server;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandbroadcast extends EssentialsCommand
@@ -14,11 +13,11 @@ public class Commandbroadcast extends EssentialsCommand
 	}
 
 	@Override
-	public void run(Server server, Essentials parent, CommandSender sender, String commandLabel, String[] args) throws Exception
+	public void run(Server server, Essentials parent, User user, String commandLabel, String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
-			sender.sendMessage("Usage: /" + commandLabel + " [msg]");
+			user.sendMessage("Usage: /" + commandLabel + " [msg]");
 		}
 
 		StringBuilder message = new StringBuilder();
