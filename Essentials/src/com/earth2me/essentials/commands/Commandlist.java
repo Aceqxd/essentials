@@ -29,12 +29,6 @@ public class Commandlist extends EssentialsCommand {
         online.append(ChatColor.BLUE).append(" out of a maximum ").append(ChatColor.RED).append(server.getMaxPlayers());
         online.append(ChatColor.BLUE).append(" players online.");
         sender.sendMessage(online.toString());
-        
-        final Plugin permissions = server.getPluginManager().getPlugin("Permissions");
-        PermissionHandler handler = null;
-        if(permissions != null) {
-            handler = ((Permissions)permissions).getHandler();
-        }
 
         if (ess.getSettings().getSortListByGroups()) {
             Map<String, List<User>> sort = new HashMap<String, List<User>>();
@@ -65,11 +59,7 @@ public class Commandlist extends EssentialsCommand {
                     if (user.isAfk()) {
                         groupString.append("§7[AFK]§f");
                     }
-                    if(handler != null) {
-                        final String prefix = handler.getGroupPrefix(group);
-                        groupString.append(prefix.substring(prefix.length() - 2));
-                    }
-                    groupString.append(user.getDisplayName());
+                    groupString.append(user.getNick());
                     groupString.append("§f");
                 }
                 sender.sendMessage(groupString.toString());
