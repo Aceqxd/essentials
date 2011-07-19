@@ -5,7 +5,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.Util;
-import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.Plugin;
 
 public class Commandlist extends EssentialsCommand {
     public Commandlist() {
@@ -59,8 +57,12 @@ public class Commandlist extends EssentialsCommand {
                     if (user.isAfk()) {
                         groupString.append("§7[AFK]§f");
                     }
-                    groupString.append(user.getNick());
-                    groupString.append("§f");
+                    final String prefix = Permissions.Security.getGroupPrefix(user.getWorld().getName(), user.getGroup()).replace('&', '§').replace("{WORLDNAME}", user.getWorld().getName());
+                    if(prefix != null)
+                        groupString.append(prefix.substring(prefix.length() - 2));
+                    groupString.append(user.getName());
+                    if(prefix != null)
+                        groupString.append("§f");
                 }
                 sender.sendMessage(groupString.toString());
             }
