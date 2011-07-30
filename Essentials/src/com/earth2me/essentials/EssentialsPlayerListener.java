@@ -200,7 +200,8 @@ public class EssentialsPlayerListener extends PlayerListener
 
 		if (user.getSavedInventory() != null)
 		{
-			user.getInventory().setContents(user.getSavedInventory());
+                        if(user.getSavedInventory().length == 36)
+                                user.getInventory().setContents(user.getSavedInventory());
 			user.setSavedInventory(null);
 		}
 		if (!ess.getSettings().getReclaimSetting())
